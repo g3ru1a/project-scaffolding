@@ -11,9 +11,11 @@ const access = promisify(fs.access);
 const copy = promisify(ncp);
 
 async function copyTemplateFiles(options) {
-    return copy(options.templateDirectory, options.targetDirectory, {
+    await copy(options.templateDirectory, options.targetDirectory, {
         clobber: false,
     });
+
+    return createDirectoryStructure(path.join(options.targetDirectory, 'src'));
 }
 
 async function initGit(options) {
@@ -24,6 +26,18 @@ async function initGit(options) {
         return Promise.reject(new Error('Failed to initialize git'));
     }
     return;
+}
+
+async function createDirectoryStructure(folderPath){
+    let folders = "../public,controllers,database,middleware,models,routes,utils,validators".split(',');
+    folders.forEach(folder => {
+        let finalPath = path.join(folderPath, folder);
+        if(!fs.existsSync(finalPath)){
+            fs.mkdirSync(finalPath, (err) => {
+                if(err) return console.error(err);
+            });
+        }
+    });
 }
 
 export async function createProject(options) {
@@ -55,7 +69,11 @@ export async function createProject(options) {
         {
             title: 'Initializing git',
             task: () => initGit(options),
-            enabled: () => options.git,
+            // enabled: () => options.git,
+            skip: () =>
+                !options.git
+                    ? 'Pass --git to automatically initialize a repo'
+                    : undefined,
         },
         {
             title: 'Installing dependencies',

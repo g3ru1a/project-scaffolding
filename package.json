@@ -30,8 +30,8 @@
     "pkg-install": "^1.0.0"
   },
   "files": [
-      "bin/",
-      "src/",
-      "templates/"
+    "bin/",
+    "src/",
+    "templates/"
   ]
 }
