@@ -1,4 +1,5 @@
 import express from 'express';
+import {Request, Response} from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
@@ -6,8 +7,8 @@ import path from 'path';
 //Load .env data
 dotenv.config();
 
-const app: express = express();
-const PORT: number = parseInt(process.env.PORT) || 3000;
+const app = express();
+const PORT: string = process.env.PORT || (3000).toString();
 
 //Middleware
 app.use('/public', express.static(path.join(__dirname,'../public')));
@@ -16,7 +17,7 @@ app.use(cors());
 
 //Routes
 app.get('/', 
-    (req: express.Application.Request, res: express.Application.Response) => {
+    (req: Request, res: Response) => {
         res.send('Hello World!');
     }
 );
