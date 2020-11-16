@@ -1,0 +1,22 @@
+{
+    "name": "api_project",
+    "version": "1.0.0",
+    "description": "An empty api javascript project",
+    "main": "src/index.js",
+    "scripts": {
+        "dev": "nodemon ./src/index.js",
+        "serve": "node ./src/index.js"
+    },
+    "keywords": [],
+    "author": "@g3ru1a/scaffolding",
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.21.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.6"
+    }
+}

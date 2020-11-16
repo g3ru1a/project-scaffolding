@@ -8,11 +8,9 @@ function parseArgumentsIntoOptions(rawArgs){
             '--git': Boolean,
             '--yes': Boolean,
             '--install': Boolean,
-            '--typescript': Boolean,
             '-g': '--git',
             '-y': '--yes',
             '-i': '--install',
-            '-ts': '--typescript'
         },
         {
             argv: rawArgs.slice(2)
@@ -23,12 +21,11 @@ function parseArgumentsIntoOptions(rawArgs){
         git: args['--git'] || false,
         template: args._[0],
         runInstall: args['--install'] || false,
-        typescript: args['--typescript'] || false,
     }
 }
 
 async function promptForMissingOptions(options) {
-    const defaultTemplate = 'api';
+    const defaultTemplate = 'API JavaScript';
     if (options.skipPrompts) {
       return {
         ...options,
@@ -42,19 +39,10 @@ async function promptForMissingOptions(options) {
         type: 'list',
         name: 'template',
         message: 'Please choose which project template to use',
-        choices: ['api'],
+        choices: ['API JavaScript', 'API TypeScript'],
         default: defaultTemplate,
       });
     }
-
-    if(!options.runInstall){
-        questions.push({
-          type: 'confirm',
-          name: 'typescript',
-          message: 'Use TypeScript?',
-          default: false,
-        });
-      }
 
     if(!options.runInstall){
       questions.push({
@@ -80,7 +68,6 @@ async function promptForMissingOptions(options) {
       template: options.template || answers.template,
       git: options.git || answers.git,
       runInstall: options.runInstall || answers.runInstall,
-      typescript: options.typescript || answers.typescript
     };
    }
 
