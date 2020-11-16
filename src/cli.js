@@ -1,5 +1,6 @@
 import arg from 'arg';
 import inquirer from 'inquirer';
+import {createProject} from './main';
 
 function parseArgumentsIntoOptions(rawArgs){
     let args = arg(
@@ -41,10 +42,13 @@ async function promptForMissingOptions(options) {
         choices: ['api'],
         default: defaultTemplate,
       });
+    }
+
+    if(!options.runInstall){
       questions.push({
         type: 'confirm',
-        name: 'install',
-        message: 'install dependencies?',
+        name: 'runInstall',
+        message: 'Install dependencies?',
         default: false,
       });
     }
@@ -63,11 +67,12 @@ async function promptForMissingOptions(options) {
       ...options,
       template: options.template || answers.template,
       git: options.git || answers.git,
+      runInstall: options.runInstall || answers.runInstall
     };
    }
 
 export async function cli(args){
     let options = parseArgumentsIntoOptions(args);
     options = await promptForMissingOptions(options);
-    console.log(options);
+    await createProject(options);
 }
