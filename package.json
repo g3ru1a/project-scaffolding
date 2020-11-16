@@ -1,6 +1,6 @@
 {
   "name": "@g3ru1a/scaffolding",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A CLI that generates the scaffolding for an api project",
   "main": "src/index.js",
   "bin": {
