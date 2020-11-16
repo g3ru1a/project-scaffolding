@@ -31,12 +31,13 @@ export async function createProject(options) {
         ...options,
         targetDirectory: options.targetDirectory || process.cwd(),
     };
-
+    let templateName = options.template.toLowerCase();
+    templateName += (options.typescript) ? '-ts' : '-js';
     const currentFileUrl = import.meta.url;
     const templateDir = path.resolve(
         new URL(currentFileUrl).pathname,
         '../../templates',
-        options.template.toLowerCase()
+        templateName
     );
     options.templateDirectory = templateDir;
 

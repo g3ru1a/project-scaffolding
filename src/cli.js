@@ -8,9 +8,11 @@ function parseArgumentsIntoOptions(rawArgs){
             '--git': Boolean,
             '--yes': Boolean,
             '--install': Boolean,
+            '--typescript': Boolean,
             '-g': '--git',
             '-y': '--yes',
-            '-i': '--install' 
+            '-i': '--install',
+            '-ts': '--typescript'
         },
         {
             argv: rawArgs.slice(2)
@@ -20,7 +22,8 @@ function parseArgumentsIntoOptions(rawArgs){
         skipPrompts: args['--yes'] || false,
         git: args['--git'] || false,
         template: args._[0],
-        runInstall: args['--install'] || false
+        runInstall: args['--install'] || false,
+        typescript: args['--typescript'] || false,
     }
 }
 
@@ -45,6 +48,15 @@ async function promptForMissingOptions(options) {
     }
 
     if(!options.runInstall){
+        questions.push({
+          type: 'confirm',
+          name: 'typescript',
+          message: 'Use TypeScript?',
+          default: false,
+        });
+      }
+
+    if(!options.runInstall){
       questions.push({
         type: 'confirm',
         name: 'runInstall',
@@ -67,7 +79,8 @@ async function promptForMissingOptions(options) {
       ...options,
       template: options.template || answers.template,
       git: options.git || answers.git,
-      runInstall: options.runInstall || answers.runInstall
+      runInstall: options.runInstall || answers.runInstall,
+      typescript: options.typescript || answers.typescript
     };
    }
 
