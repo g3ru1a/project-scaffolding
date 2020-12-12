@@ -39,7 +39,7 @@ async function promptForMissingOptions(options) {
         type: 'list',
         name: 'template',
         message: 'Please choose which project template to use',
-        choices: ['API JavaScript', 'API TypeScript'],
+        choices: ['API JavaScript', 'API TypeScript', 'DiscordJS TS'],
         default: defaultTemplate,
       });
     }
