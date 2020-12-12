@@ -38,6 +38,16 @@ async function createDirectoryStructure(folderPath){
             });
         }
     });
+
+    let files = [".gitignore"];
+    files.forEach(file => {
+        let filePath = path.join(folderPath, '../'+file);
+        if(!fs.existsSync(filePath)){
+            fs.writeFileSync(filePath, "/node_modules\n.env", (err) => {
+                if(err) return console.error(err);
+            });
+        }
+    })
 }
 
 export async function createProject(options) {
